@@ -1,0 +1,246 @@
+library(shiny)
+library(shinythemes)
+
+
+ui <- fluidPage(tags$head(tags$style(".checkbox-inline, .radio-inline {margin: 0 !important;padding-right: 10px;}")),
+  theme = shinytheme("cosmo"),  
+               titlePanel(title=div(img(src="LSC_Logo.jpg",
+                                        height = 50,
+                                        width = 160
+                                        #,
+                                        #align = "right"
+                                        ),strong("GAR Data Download App")
+                                    ), windowTitle = "GARDDAPHH"),
+               sidebarLayout(
+                 
+                 sidebarPanel(width = 12,
+                   checkboxGroupInput(inputId = "year", 
+                                      label = "Choose Year(s):",
+                                      choices = list(2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017),
+                                      selected = 2017, inline = T),
+                   #hr(),
+                   helpText(strong("Please choose the State(s) and/or Service Area(s) you want from the lists below:",
+                                   style = "color:blue"), 
+                            h5("Note: You can select more than one.", style = "color:black")),
+                   
+                   fluidRow(
+                   column(width=6, selectInput(inputId = "state", 
+                               label = tags$div("State(s):", style = "color:blue"),
+                               choices = list("Alabama" = "AL", "Alaska" = "AK", "Arizona" = "AZ", 
+                                              "Arkansas" = "AR", 
+                                              "California" = "CA", "Colorado" = "CO", "Connecticut" = "CT", 
+                                              "Delaware" = "DE", 
+                                              "Florida" = "FL", "Georgia" = "GA", "Hawaii" = "HI", 
+                                              "Idaho" = "ID", "Illinois" = "IL", "Indiana" = "IN", "Iowa" = "IA", 
+                                              "Kansas" = "KS", "Kentucky" = "KY", 
+                                              "Louisiana" = "LA", 
+                                              "Maine" = "ME", "Maryland" = "MD", "Massachusetts" = "MA", 
+                                              "Michigan" = "MI", "Minnesota" = "MN", "Mississippi" = "MS", 
+                                              "Missouri" = "MO", "Montana" = "MT", 
+                                              "Nebraska" = "NE", "Nevada" = "NV", "New Hampshire" = "NH", 
+                                              "New Jersey" = "NJ", "New Mexico" = "NM", "New York" = "NY", 
+                                              "North Carolina" = "NC", "North Dakota" = "ND", 
+                                              "Ohio" = "OH", "Oklahoma" = "OK", "Oregon" = "OR", 
+                                              "Pennsylvania" = "PA", "Rhode Island" = "RI", 
+                                              "South Carolina" = "SC", "South Dakota" = "SD", 
+                                              "Tennessee" = "TN", "Texas" = "TX", 
+                                              "Utah" = "UT", "Vermont" = "VT", "Virginia" = "VA", 
+                                              "Washington" = "WA", "West Virginia" = "WV", 
+                                              "Wisconsin" = "WI", "Wyoming" = "WY", "American Samoa" = "AS", 
+                                              "District of Columbia" = "DC", "Guam" = "GU", 
+                                              "Northern Mariana Islands" = "MP", 
+                                              "Puerto Rico" = "PR", 
+                                              "United States Virgin Islands" = "VI"), multiple = TRUE)),
+                   #hr(),
+                   column(width=6, selectInput(inputId = "service_area", 
+                               label = tags$div("Service Area(s):", style = "color:blue"),
+                               choices = list("AK-1", "AL-4", "AR-6", "AR-7", "AS-1", "AZ-2", "AZ-3", "AZ-5",
+                                              "CA-1", "CA-2", "CA-12", "CA-14", "CA-19", "CA-26", "CA-27", 
+                                              "CA-28", "CA-29", "CA-30", "CA-31", "CO-6", "CT-1", "DC-1", 
+                                              "DE-1", "FL-13", "FL-5", "FL-14", "FL-15", "FL-16", "FL-17", 
+                                              "FL-18", "GA-1", "GA-2", "GU-1", "HI-1", "IA-3", "ID-1", "IL-3", 
+                                              "IL-6", "IL-7", "IN-5", "KS-1", "KY-2", "KY-5", "KY-9", "KY-10",  
+                                              "LA-1", "LA-10", "LA-11", "LA-12", "LA-13", "MA-4", "MA-10", 
+                                              "MA-11", "MA-12", "MD-1", "ME-1", "MI-9", "MI-12", "MI-13", 
+                                              "MI-14", "MI-15",  "MN-1", "MN-4", 
+                                              "MN-5", "MN-6", "MO-3", "MO-4","MO-5", "MO-7", "MP-1", 
+                                              "MS-9", "MS-10", "MT-1", "NC-5", "ND-3", "NE-4", "NH-1", "NJ-8", 
+                                              "NJ-12", "NJ-15", "NJ-16", "NJ-17", "NJ-18", "NM-1", "NM-5", 
+                                              "NY-20", "NY-21", "NY-22", "NY-23", "NY-24", "NY-7", "NY-9", 
+                                              "OH-17", "OH-18", "OH-20", "OH-21", "OH-23", "OH-24", "OH-5", 
+                                              "OK-3", "OR-6", "PA-1", "PA-11", "PA-23", "PA-24", "PA-25", 
+                                              "PA-26", "PA-5", "PA-8", "PR-1", "PR-2", "RI-1", "SC-8", "SD-2", 
+                                              "SD-4", "TN-10", "TN-4", "TN-7", "TN-9", "TX-13", "TX-14", 
+                                              "TX-15", "UT-1", "VA-15", "VA-16", "VA-17", "VA-18", "VA-19", 
+                                              "VA-20", "VI-1", "VT-1", "WA-1", "WI-2", "WI-5", "WV-5", "WY-4", 
+                                              "MAL", "MAR", "MAZ", "MCA", "MCO", "MDE", 
+                                              "MFL", "MGA", "MIA", "MID", "MIL", "MIN", "MKS", "MKY", "MLA",
+                                              "MMD", "MMI", "MMN", "MMO", "MMS", "MMT", "MMX-1", "MNC", "MND", 
+                                              "MNE", "MNJ", "MNM", "MNV", "MNY",  "MOH",  "MOK",  "MOR",
+                                              "MPA",  "MPR",  "MSC",  "MSD",  "MSX-2",
+                                              "MTN",  "MTX",  "MUT",  "MVA",  "MWA",  "MWI",  "MWV",
+                                              "NAK-1", "NAZ-5", "NAZ-6", "NCA-1", "NCO-1", "NCT-1", 
+                                              "NHI-1", "NID-1", "NME-1", "NMI-1", "NMN-1", 
+                                              "NMS-1", "NMT-1", "NNC-1", "NND-3", "NNE-1",
+                                              "NNM-2", "NNM-4", "NNV-1", "NOK-1", "NOR-1", "NSD-1", "NTX-1", 
+                                              "NUT-1", "NV-1", "NWA-1", "NWI-1", "NWY-1"), multiple = TRUE))),
+                   #hr(),
+                   checkboxGroupInput(inputId = "service_area_type", 
+                                      label = tags$div("Choose Service Area Type(s):", style = "color:MAROON"),
+                                      choices = list("Basic Field" = "Basic Field", 
+                                                     "Agriculture worker" = "Migrant Worker", 
+                                                     "Native American" = "Native American"),
+                                      selected = "Basic Field", inline = T),
+                   downloadButton('Download',"Download")
+                 ),
+                 
+                 mainPanel(width = 12,
+                   tabsetPanel(
+                     tabPanel("Revenue",
+                              br(),
+                              checkboxGroupInput(inputId = "default_Rev_cat", 
+                                                 label = "Select/Unselect Summary Data:",
+                                                 choices = list("Total LSC and Non-LSC Funds" = "Total_LSC_NonLSC_Funds", 
+                                                                "Total LSC Funds" = "Total_LSC_Funds",
+                                                                "Total Non-LSC Funds" = "Total_NonLSC_Funds", 
+                                                                "Total Client Service Income" = "Total_Client_Service_Income"),
+                                                 selected = c("Total_LSC_NonLSC_Funds", "Total_LSC_Funds", 
+                                                              "Total_NonLSC_Funds", "Total_Client_Service_Income"),
+                                                 inline = T),
+                              hr(style="border-color: black;"),
+                              checkboxGroupInput(inputId = "revenue_cat", 
+                                                 label = tags$div("Choose the category of revenue you would like to see:", style = "color:blue"),
+                                                 choices = list("LSC", "Non LSC", "Client Service Income"),
+                                                 selected = c("LSC", "Non LSC", "Client Service Income"),
+                                                 inline = T),
+                              
+                              uiOutput("for_revenue_column"),
+                              hr(),
+                              tableOutput('Table_revenue')
+                     ),
+                     
+                     tabPanel("Expenditure",
+                              br(),
+                              checkboxGroupInput(inputId = "default_exp_cat", 
+                                                 label = "Select/Unselect Summary Data:",
+                                                 choices = list("Total LSC and Non-LSC Expenditures" = "Total_lsc_nonlsc_expenditures", 
+                                                                "Total LSC Expenditures" = "Total_lsc_expenditures",
+                                                                "Total Non-LSC Expenditures" = "Total_non_lsc_expenditures"),
+                                                 selected = c("Total_lsc_nonlsc_expenditures", "Total_lsc_expenditures", 
+                                                              "Total_non_lsc_expenditures"),
+                                                 inline = T),
+                              hr(style="border-color: black;"),
+                              checkboxGroupInput(inputId = "expenses_cat", 
+                                                 label = tags$div("Choose the category of expenditure you would like to see:", style = "color:blue"),
+                                                 choices = list("LSC", "Non LSC", "Total"),
+                                                 selected = c("LSC", "Non LSC", "Total"),
+                                                 inline = T),
+                              
+                              uiOutput("for_expenses_column"),
+                              hr(),
+                              tableOutput('Table_expenses')),
+                     
+                     tabPanel("Case Services",
+                              br(),
+                              checkboxGroupInput(inputId = "default_cat", 
+                                                 label = "Select/Unselect Summary Data:",
+                                                 choices = list("Total Number of Cases Closed" = "Total_case_closure", 
+                                                                "Total Number of Limited Cases Closed" = "Total_cases_closed_limited",
+                                                                "Total Number of Extended Cases Closed" = "Total_cases_closed_extended", 
+                                                                "Total Number of Contested Cases Closed" = "Total_cases_closed_contested"),
+                                                 selected = c("Total_case_closure", "Total_cases_closed_limited", 
+                                                              "Total_cases_closed_extended", "Total_cases_closed_contested"),
+                                                 inline = T),
+                              hr(style="border-color: black;"),
+                              
+                              helpText(strong("Generate Custom Measures"), '-- Select one option from each row to 
+                                       generate a specific variable. For example, a selection of "Housing" for 
+                                       problem category, "PAI" for PAI/Staff category, "Limited" from Level of
+                                       Services, and "Total" from the subcategory menu will generate data on 
+                                       the number of Limited Service PAI Housing cases closed. You may generate
+                                       only one variable at a time.'),
+                              
+                              radioButtons(inputId = "problem_cat", 
+                                           label = tags$div("Choose a Problem Category:", style = "color:#E67E22"),
+                                           choices = list("Total", "Consumer", "Education", "Employment", 
+                                                          "Family", "Health", "Housing", "Income", "Individual", 
+                                                          "Juvenile", "Misc"),
+                                           inline = T),
+                              
+                              radioButtons(inputId = "PAI_cat", 
+                                           label = tags$div("Choose Total, PAI, or Staff cases:", style = "color:MAROON"),
+                                           choices = list("Total", "PAI", "Staff"),
+                                           inline = T),
+                           #################################################################   
+                              radioButtons(inputId = "case_cat1", 
+                                           label = tags$div("Choose the Level of Service Provided:", style = "color:blue"),
+                                           choices = list("Total", "Limited", "Extended", "Contested"),
+                                           inline = T),
+                              uiOutput("for_case_cat1"),
+
+                              
+                              actionButton("choose", "Generate"),
+                              actionButton("reset", "Clear"),
+                              hr(style="border-color: black;"),
+                              uiOutput("for_caseSer_column"),
+                              
+                              
+                              hr(),
+                              tableOutput('Table_problem')),
+                     
+                     tabPanel("Client Characteristics",
+                              br(),
+                              checkboxGroupInput(inputId = "default_client_cat", 
+                                                 label = "Select/Unselect Summary Data:",
+                                                 choices = list("Total Individual Clients" = "Individual_clients", 
+                                                                "Total Group Clients" = "Groups"),
+                                                 selected = c("Individual_clients", "Groups"),
+                                                 inline = T),
+                              
+                              checkboxGroupInput(inputId = "gender_cat", 
+                                                 label = "Choose Individual Client Gender(s):",
+                                                 choices = list("Men", "Women", "Other" = "Other_gender",
+                                                                "Unknown" = "Unknown_gender"),
+                                                 inline = T),
+                              
+                              checkboxGroupInput(inputId = "veteran_cat", 
+                                                 label = "Choose Veteran Status(es):",
+                                                 choices = list("Veteran", "Non-Veteran" = "Non_Veteran",  
+                                                                "Unknown" = "Unknown_veteran"),
+                                                 inline = T),
+                              
+                              helpText(strong("Below is for the combined selection of age and ethnicity type"), style="color:blue"),
+                              
+                              radioButtons(inputId = "age_cat", 
+                                           label = "Choose an Age Category:",
+                                           choices = list("Blank", "0 - 17" = "age_0_17", "18 - 59" = "age_18_59", 
+                                                          "18 - 35" = "age_18_35", "36 - 59" = "age_36_59",
+                                                          "equal or over 60" = "age_60_and_Over",
+                                                          "Unknown" = "Unknown_age"),
+                                           inline = T),
+                              
+                              radioButtons(inputId = "ethnicity_cat", 
+                                           label = "Choose a Race/Ethnicity Category:",
+                                           choices = list("Blank", "Asian", "Black", "Hispanic", 
+                                                          "Native American" = "Native_American", "White", 
+                                                          "Other" = "Other_ethnicity", "Unknown" = "Unknown_ethnicity"),
+                                           inline = T),
+                              
+                              actionButton("choose_D", "Generate"),
+                              actionButton("reset_D", "Clear"),
+                              
+                              
+                              selectInput(width = '70%', inputId = "ethnicity_age_cat", 
+                                          label = "Age and Race/Ethnicity Measures already generated:",
+                                          choices = "", selected = "", multiple = T),
+                              hr(),
+                              tableOutput('Table_demo')),
+                     
+                     tabPanel("Preview Data",
+                              br(),
+                              tableOutput('Table'))
+                   )
+                 )
+                 )
+                 
+               )
