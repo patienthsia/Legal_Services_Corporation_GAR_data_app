@@ -1,0 +1,13 @@
+name: LSC_GAR_Data_App
+title: LSC_GAR_Data_App
+username:
+account: lsc-gov
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 387031
+bundleId: 1504016
+url: https://lsc-gov.shinyapps.io/LSC_GAR_Data_App/
+when: 1532715276.02954
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ~$app_caseservices_categories.xlsx|~$app_caseservices_categories2.xlsx|app_caseservices_categories.xlsx|case_services_RS_part2_5_final.csv|CaseServicesList.R|conceptClarify.R|dataMulnipulate.R|demographics_RS_part2_4.csv|expenses_RS2.csv|join_together.csv|join_together.xlsx|reveune_wide2_visul.CSV

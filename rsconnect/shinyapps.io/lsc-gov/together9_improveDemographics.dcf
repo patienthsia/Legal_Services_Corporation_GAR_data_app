@@ -1,0 +1,13 @@
+name: together9_improveDemographics
+title: together9_improveDemographics
+username:
+account: lsc-gov
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 370324
+bundleId: 1456916
+url: https://lsc-gov.shinyapps.io/together9_improveDemographics/
+when: 1530300553.8812
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ~$app_caseservices_categories.xlsx|app_caseservices_categories.xlsx|case_services_RS_part2_5_final.csv|demographics_RS_part2_4.csv|expenses_RS2.csv|join_together.csv|join_together.xlsx|LSCLogos.jpg|reveune_wide2_visul.CSV|source.R|reshape_forVisual

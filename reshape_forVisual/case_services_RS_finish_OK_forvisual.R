@@ -1,0 +1,39 @@
+library(plyr)
+library(data.table)
+library(tidyr)
+library(dplyr)
+
+cs_long_Vi <- read.csv("case_services_RS_part2_4_RFRS_noPC_forVisual.csv")
+
+list_for_a_Vi <- c("cases_closed_limited", "a_counsel_and_advice", "b_limited_action", 
+                "cases_closed_extended", "f_negotiated_settlement_w_o_litigation", 
+                "g_negotiated_settlement_w_litigation", "h_agency_decision", 
+                "ia_court_decision_uncontested", "ib_court_decision_contested", 
+                "ic_court_decision_appeals", "k_other_closure_methods", "l_extensive_services", 
+                "cases_closed_contested")
+
+cs_a_Vi <- aggregate(cs_long_Vi[,list_for_a_Vi], 
+                     by = list(cs_long_Vi$org_name, cs_long_Vi$recipient_id, 
+                                cs_long_Vi$grant_year, cs_long_Vi$state, 
+                                cs_long_Vi$service_area, cs_long_Vi$service_area_type,
+                                cs_long_Vi$problem_category), 
+                     sum, na.rm=TRUE)
+
+colnames(cs_a_Vi)[1:7] <- c("org_name", "recipient_id", "grant_year", "state" ,"service_area", 
+                            "service_area_type", "problem_category")
+
+cs_RS_3_Vi <- dcast(setDT(cs_a_Vi), 
+                    org_name + recipient_id + grant_year + state + service_area 
+                    + service_area_type ~ problem_category , value.var=list_for_a_Vi)
+
+
+ori_vis_table <- read.csv("join_together.csv")
+
+
+new_join_Vi <- left_join(ori_vis_table, cs_RS_3_Vi, 
+                         by = c("org_name", "recipient_id", "grant_year", "state", "service_area",
+                                "service_area_type"))
+
+#export
+write.table(new_join_Vi, file = "join_together_2.csv", sep = ",", row.names = F)
+

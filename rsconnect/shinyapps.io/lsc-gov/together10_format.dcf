@@ -1,0 +1,13 @@
+name: together10_format
+title: together10_format
+username:
+account: lsc-gov
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 379398
+bundleId: 1487117
+url: https://lsc-gov.shinyapps.io/together10_format/
+when: 1531930663.1098
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ~$app_caseservices_categories.xlsx|app_caseservices_categories.xlsx|case_services_RS_part2_5_final.csv|conceptClarify.R|dataMulnipulate.R|demographics_RS_part2_4.csv|expenses_RS2.csv|join_together.csv|join_together.xlsx|LSCLogos.jpg|reveune_wide2_visul.CSV|source.R
